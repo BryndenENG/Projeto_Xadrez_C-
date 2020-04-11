@@ -21,5 +21,10 @@ namespace tabuleiro
             this.colunas = colunas;
             pecas = new Peca[linhas, colunas];
         }
+        //RETORNA SE EM DETERMINADA POSIÇÃO EXISTE OU NÃO ALGUMA PEÇA 
+        public Peca peca(int linha, int coluna)
+        {
+            return pecas[linha, coluna];
+        }
     }
 }
