@@ -26,5 +26,16 @@ namespace tabuleiro
         {
             return pecas[linha, coluna];
         }
+        /*
+         * A OPERAÇÃO DE COLOCAR PEÇA ENVOLVE COLOCAR UMA PEÇA DEFINIDA COM O NOME DE P DENTRO DA MATRIZ PECAS
+         * EM SUA POSIÇÃO X,Y SIMBOLIZADO POR LINHA,COLUNA(LINHA 35)
+         * TAMBÉM INFORMAR A ESTA DETERMINADA PEÇA SUA POSIÇÃO DENTRO DO TABULEIRO POIS LEMBRANDO CADA PEÇA POSSUI
+         * UMA POSIÇÃO DADA POR DETERMINADA LINHA E COLUNA 
+         */
+        public void colocarPeca(Peca p, Posicao pos)
+        {
+            pecas[pos.linha, pos.coluna] = p;
+            p.Posicao = pos;
+        }
     }
 }
