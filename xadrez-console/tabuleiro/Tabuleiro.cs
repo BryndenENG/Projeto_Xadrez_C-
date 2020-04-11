@@ -26,6 +26,16 @@ namespace tabuleiro
         {
             return pecas[linha, coluna];
         }
+        //SOBRECARGA DO MÉTODO ACIMA 
+        public Peca peca(Posicao pos)
+        {
+            return pecas[pos.linha, pos.coluna];
+        }
+        public bool existePeca(Posicao pos)
+        {
+            validarPosicao(pos); 
+            return peca(pos) != null;
+        }
         /*
          * A OPERAÇÃO DE COLOCAR PEÇA ENVOLVE COLOCAR UMA PEÇA DEFINIDA COM O NOME DE P DENTRO DA MATRIZ PECAS
          * EM SUA POSIÇÃO X,Y SIMBOLIZADO POR LINHA,COLUNA(LINHA 35)
@@ -34,8 +44,34 @@ namespace tabuleiro
          */
         public void colocarPeca(Peca p, Posicao pos)
         {
+            if (existePeca(pos))
+            {
+                throw new TabuleiroException("Já existe uma peça nesta posição");
+            }
             pecas[pos.linha, pos.coluna] = p;
             p.Posicao = pos;
+        }
+        /*
+         * EFETUA O TESTE SE A POSIÇÃO INFORMADA É VALIDA PARA OS PARAMETROS DO TAMANHO DO TABULEIRO 
+         */
+        public bool posicaoValida(Posicao pos)
+        {
+            if (pos.linha < 0 || pos.linha >= linhas || pos.coluna < 0 || pos.coluna >= colunas)
+            {
+                return false;
+            }
+            return true;
+        }
+        /*
+         * EFETUA A VALIDAÇÃO DA POSIÇÃO E TRATA DE POSSIVEIS ERROS COM EXCEÇÕES PERSONALIZADAS
+         */
+         public void validarPosicao(Posicao pos)
+        {
+            if (!posicaoValida(pos))
+            {
+                throw new TabuleiroException("Posição invalida!");
+            }
+
         }
     }
 }
