@@ -52,6 +52,21 @@ namespace tabuleiro
             p.Posicao = pos;
         }
         /*
+         * A PEÇA SERÁ RETIRADA E RETORNADA ALGUM USO POSTERIOR
+         */
+        public Peca retirarPeca(Posicao pos)
+        {
+            if (peca(pos) == null)//TESTA SE EXISTE PEÇA NA POSIÇÃO DO TABULEIRO, CASO NÃO EXISTA RETORNA NULO
+            {
+                return null;
+            }
+            //CASO PASSO DO TESTE ACIMA, SIGNIFICA A EXISTENCIA DA PEÇA NO TABULEIRO
+            Peca aux = peca(pos);//A VARIAVEL AUX ARMAZENA DADOS DA PEÇA QUE SE ENCONTRA NO TABULEIRO
+            aux.Posicao = null;//A POSIÇÃO DA PEÇA RECEBE VALOR NULO
+            pecas[pos.linha, pos.coluna] = null;//RECEBE VALOR NULO ESVAZIANDO ASSIM A POSIÇÃO DO TABULEIRO (MATRIZ)
+            return aux;//RETORNA OS DADOS DA PEÇA
+        }
+        /*
          * EFETUA O TESTE SE A POSIÇÃO INFORMADA É VALIDA PARA OS PARAMETROS DO TAMANHO DO TABULEIRO 
          */
         public bool posicaoValida(Posicao pos)

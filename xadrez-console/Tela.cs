@@ -1,5 +1,6 @@
 ﻿using System;
 using tabuleiro;
+using xadrez;
 
 namespace xadrez_console
 {
@@ -27,6 +28,14 @@ namespace xadrez_console
                 Console.WriteLine();
             }
             Console.WriteLine("  a b c d e f g h");//PRINTA AS LETRAS DA COLUNA
+        }
+        public static PosicaoXadrez lerPosicaoXadrez()
+        {
+            string s = Console.ReadLine();//digitará uma posição de xadrez
+            char coluna = s[0];//RECEBERÁ O PRIMEIRO CARACTERE DO VALOR INSERIDO A-H
+            int linha = int.Parse(s[1] + "");//COLETA O VALOR NUMERICO DA INSERÇÃO, FOI INSERIDO O "" DENTRO DOS 
+                                             //PARENTESIS PARA FACILITAR A CONVERSÃO EFETUADA
+            return new PosicaoXadrez(coluna, linha);
         }
         public static void imprimirPeca(Peca peca)
         {
