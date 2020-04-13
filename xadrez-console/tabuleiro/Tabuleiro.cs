@@ -49,7 +49,7 @@ namespace tabuleiro
                 throw new TabuleiroException("Já existe uma peça nesta posição");
             }
             pecas[pos.linha, pos.coluna] = p;
-            p.Posicao = pos;
+            p.posicao = pos;
         }
         /*
          * A PEÇA SERÁ RETIRADA E RETORNADA ALGUM USO POSTERIOR
@@ -62,7 +62,7 @@ namespace tabuleiro
             }
             //CASO PASSO DO TESTE ACIMA, SIGNIFICA A EXISTENCIA DA PEÇA NO TABULEIRO
             Peca aux = peca(pos);//A VARIAVEL AUX ARMAZENA DADOS DA PEÇA QUE SE ENCONTRA NO TABULEIRO
-            aux.Posicao = null;//A POSIÇÃO DA PEÇA RECEBE VALOR NULO
+            aux.posicao = null;//A POSIÇÃO DA PEÇA RECEBE VALOR NULO
             pecas[pos.linha, pos.coluna] = null;//RECEBE VALOR NULO ESVAZIANDO ASSIM A POSIÇÃO DO TABULEIRO (MATRIZ)
             return aux;//RETORNA OS DADOS DA PEÇA
         }
