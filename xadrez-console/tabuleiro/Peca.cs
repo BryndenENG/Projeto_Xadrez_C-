@@ -19,6 +19,27 @@ namespace tabuleiro
         {
             qteMovimentos++;
         }
+        public bool existeMovimentosPossiveis()
+        {
+            bool[,] mat = movimentosPossiveis();//recebe a matriz de movimentos possiveis 
+            //PERCORRERÁ TODAS AS LINHAS DA MATRIZ DE MOVIMENTOS POSSIVEIS CHECANDO ALGUM VALOR POSITIVO
+            for (int i = 0; i < tab.linhas; i++)
+            {
+                for (int j = 0; j < tab.colunas; j++)
+                {
+                    if (mat[i,j])//caso encontre algum valor positivo returna true 
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;//se nenhum valor positivo for encontrado retorna false 
+        }
+        //MELHORA A LEITURA DE POSIÇÃO DE DESTINO POSSIVEL
+        public bool podeMoverPara(Posicao pos)
+        {
+            return movimentosPossiveis()[pos.linha, pos.coluna];
+        }
         public abstract bool[,] movimentosPossiveis();
     }
 }
