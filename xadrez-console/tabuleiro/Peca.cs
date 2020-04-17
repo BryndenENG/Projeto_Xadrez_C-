@@ -40,7 +40,7 @@ namespace tabuleiro
             return false;//se nenhum valor positivo for encontrado retorna false 
         }
         //MELHORA A LEITURA DE POSIÇÃO DE DESTINO POSSIVEL
-        public bool podeMoverPara(Posicao pos)
+        public bool movimentoPossivel(Posicao pos)
         {
             return movimentosPossiveis()[pos.linha, pos.coluna];
         }
