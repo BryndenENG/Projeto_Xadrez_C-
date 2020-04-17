@@ -228,28 +228,40 @@ namespace xadrez
         }
         private void colocarPecas()
         {
-            colocarNovaPeça('c', 1, new Torre(tab, Cor.Branca));
-            colocarNovaPeça('d', 1, new Rei(tab, Cor.Branca));
-            colocarNovaPeça('h', 7, new Torre(tab, Cor.Branca));
+            colocarNovaPeça('a', 1, new Torre(tab, Cor.Branca));
+            colocarNovaPeça('b', 1, new Cavalo(tab, Cor.Branca));
+            colocarNovaPeça('c', 1, new Bispo(tab, Cor.Branca));
+            colocarNovaPeça('d', 1, new Dama(tab, Cor.Branca));
+            colocarNovaPeça('e', 1, new Rei(tab, Cor.Branca));
+            colocarNovaPeça('f', 1, new Bispo(tab, Cor.Branca));
+            colocarNovaPeça('g', 1, new Cavalo(tab, Cor.Branca));
+            colocarNovaPeça('h', 1, new Torre(tab, Cor.Branca));
+            colocarNovaPeça('a', 2, new Peao(tab, Cor.Branca));
+            colocarNovaPeça('b', 2, new Peao(tab, Cor.Branca));
+            colocarNovaPeça('c', 2, new Peao(tab, Cor.Branca));
+            colocarNovaPeça('d', 2, new Peao(tab, Cor.Branca));
+            colocarNovaPeça('e', 2, new Peao(tab, Cor.Branca));
+            colocarNovaPeça('f', 2, new Peao(tab, Cor.Branca));
+            colocarNovaPeça('g', 2, new Peao(tab, Cor.Branca));
+            colocarNovaPeça('h', 2, new Peao(tab, Cor.Branca));
 
-            colocarNovaPeça('a', 8, new Rei(tab, Cor.Preta));
-            colocarNovaPeça('b', 8, new Torre(tab, Cor.Preta));
+            colocarNovaPeça('a', 8, new Torre(tab, Cor.Preta));
+            colocarNovaPeça('b', 8, new Cavalo(tab, Cor.Preta));
+            colocarNovaPeça('c', 8, new Bispo(tab, Cor.Preta));
+            colocarNovaPeça('d', 8, new Dama(tab, Cor.Preta));
+            colocarNovaPeça('e', 8, new Rei(tab, Cor.Preta));
+            colocarNovaPeça('f', 8, new Bispo(tab, Cor.Preta));
+            colocarNovaPeça('g', 8, new Cavalo(tab, Cor.Preta));
+            colocarNovaPeça('h', 8, new Torre(tab, Cor.Preta));
+            colocarNovaPeça('a', 7, new Peao(tab, Cor.Preta));
+            colocarNovaPeça('b', 7, new Peao(tab, Cor.Preta));
+            colocarNovaPeça('c', 7, new Peao(tab, Cor.Preta));
+            colocarNovaPeça('d', 7, new Peao(tab, Cor.Preta));
+            colocarNovaPeça('e', 7, new Peao(tab, Cor.Preta));
+            colocarNovaPeça('f', 7, new Peao(tab, Cor.Preta));
+            colocarNovaPeça('g', 7, new Peao(tab, Cor.Preta));
+            colocarNovaPeça('h', 7, new Peao(tab, Cor.Preta));
 
-            /*
-            colocarNovaPeça('c', 1, new Torre(tab, Cor.Branca));
-            colocarNovaPeça('c', 2, new Torre(tab, Cor.Branca));
-            colocarNovaPeça('d', 2, new Torre(tab, Cor.Branca));
-            colocarNovaPeça('e', 2, new Torre(tab, Cor.Branca));
-            colocarNovaPeça('e', 1, new Torre(tab, Cor.Branca));
-            colocarNovaPeça('d', 1, new Rei(tab, Cor.Branca));
-
-            colocarNovaPeça('c', 7, new Torre(tab, Cor.Preta));
-            colocarNovaPeça('c', 8, new Torre(tab, Cor.Preta));
-            colocarNovaPeça('d', 7, new Torre(tab, Cor.Preta));
-            colocarNovaPeça('e', 7, new Torre(tab, Cor.Preta));
-            colocarNovaPeça('e', 8, new Torre(tab, Cor.Preta));
-            colocarNovaPeça('d', 8, new Rei(tab, Cor.Preta));
-            */
         }
     }
 }
