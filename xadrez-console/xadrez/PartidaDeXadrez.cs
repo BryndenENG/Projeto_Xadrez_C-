@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using tabuleiro;
 
 namespace xadrez
@@ -13,6 +12,7 @@ namespace xadrez
         private HashSet<Peca> pecas;
         private HashSet<Peca> capturadas;
         public bool xeque { get; private set; }
+        public Peca vulneravelEnPassant { get; private set; }
 
         public PartidaDeXadrez()
         {
@@ -23,6 +23,7 @@ namespace xadrez
             xeque = false;
             pecas = new HashSet<Peca>();
             capturadas = new HashSet<Peca>();
+            vulneravelEnPassant = null;
             colocarPecas();
         }
         public Peca executaMovimento(Posicao origem, Posicao destino)
@@ -57,6 +58,28 @@ namespace xadrez
                 tab.colocarPeca(T, destinoT);
 
             }
+            //#JOGADA ESPECIAL EN PASSANT
+            if (p is Peao)//verifica se a peça capturada foi um peão 
+            {
+                //como o peao apenas se movimenta para frente verifica se ele efetuou um movimento na diagonal
+                if(origem.coluna != destino.coluna && pecaCapturada == null)
+                {
+                    //efetua de ma posição atual do peao -1 para brancas ou +1 para pretas se existe um peão 
+                    Posicao posP;
+                    if(p.cor == Cor.Branca)
+                    {
+                        posP = new Posicao(destino.linha + 1, destino.coluna);
+                    }
+                    else
+                    {
+                        posP = new Posicao(destino.linha - 1, destino.coluna);
+                    }
+                    //retira manualmente o peão capturado via en passan ja que é uma lógica diferente da captura normal
+                    pecaCapturada = tab.retirarPeca(posP);
+                    capturadas.Add(pecaCapturada);
+                }
+
+            }
             return pecaCapturada;
         }
         //MÉTODO COM NIVEL MAIS ALTO DE ABSTRAÇÃO
@@ -88,6 +111,18 @@ namespace xadrez
                 //ALTERA A VEZ DE QUEM IRÁ JOGAR 
                 mudaJogador();
             }
+            //#JOGADA ESPECIAL EN PASSANT
+            Peca P = tab.peca(destino);//armazena peça que foi movida 
+            //testa se a peça é um peão e se a mesma efetuou o movimento especial inicial de mover duas posições tanto para preta
+            //como para branca
+            if (P is Peao && (destino.linha == origem.linha - 2 || destino.linha == origem.linha +2))
+            {
+                vulneravelEnPassant = P;
+            }
+            else
+            {
+                vulneravelEnPassant = null;
+            }
         }
 
         //DESFAZ MOVIMENTO EM CASO DE OCORRENCIA DE SITUAÇÃO DE XEQUE 
@@ -112,7 +147,6 @@ namespace xadrez
                 Peca T = tab.retirarPeca(destinoT);
                 T.decrementarQteMovimetos();
                 tab.colocarPeca(T, origemT);
-
             }
             //#jogadaespecial roque grande
             if (p is Rei && destino.coluna == origem.coluna - 2)
@@ -123,20 +157,27 @@ namespace xadrez
                 Peca T = tab.retirarPeca(destinoT);
                 T.decrementarQteMovimetos();
                 tab.colocarPeca(T, origemT);
-
             }
-
-
-
-
-
-
-
-
-
-
-
-
+            //#jogada especial en passant
+            if (p is Peao)//verifica se a pessa em questão é um peão 
+            {
+                //verifica se o movimento efetuado foi um en passant
+                if(origem.coluna != destino.coluna && pecaCapturada == vulneravelEnPassant)
+                {
+                    //correção do retorno dos peões para as posições de origem 
+                    Peca peao = tab.retirarPeca(destino);
+                    Posicao posP;
+                    if (p.cor == Cor.Branca)
+                    {
+                        posP = new Posicao(3, destino.coluna);
+                    }
+                    else
+                    {
+                        posP = new Posicao(4, destino.coluna);
+                    }
+                    tab.colocarPeca(peao, posP);
+                }
+            }
         }
         public void validarPosicaoDeOrigem(Posicao pos)
         {
@@ -294,14 +335,14 @@ namespace xadrez
             colocarNovaPeça('f', 1, new Bispo(tab, Cor.Branca));
             colocarNovaPeça('g', 1, new Cavalo(tab, Cor.Branca));
             colocarNovaPeça('h', 1, new Torre(tab, Cor.Branca));
-            colocarNovaPeça('a', 2, new Peao(tab, Cor.Branca));
-            colocarNovaPeça('b', 2, new Peao(tab, Cor.Branca));
-            colocarNovaPeça('c', 2, new Peao(tab, Cor.Branca));
-            colocarNovaPeça('d', 2, new Peao(tab, Cor.Branca));
-            colocarNovaPeça('e', 2, new Peao(tab, Cor.Branca));
-            colocarNovaPeça('f', 2, new Peao(tab, Cor.Branca));
-            colocarNovaPeça('g', 2, new Peao(tab, Cor.Branca));
-            colocarNovaPeça('h', 2, new Peao(tab, Cor.Branca));
+            colocarNovaPeça('a', 2, new Peao(tab, Cor.Branca, this));
+            colocarNovaPeça('b', 2, new Peao(tab, Cor.Branca, this));
+            colocarNovaPeça('c', 2, new Peao(tab, Cor.Branca, this));
+            colocarNovaPeça('d', 2, new Peao(tab, Cor.Branca, this));
+            colocarNovaPeça('e', 2, new Peao(tab, Cor.Branca, this));
+            colocarNovaPeça('f', 2, new Peao(tab, Cor.Branca, this));
+            colocarNovaPeça('g', 2, new Peao(tab, Cor.Branca, this));
+            colocarNovaPeça('h', 2, new Peao(tab, Cor.Branca, this));
 
             colocarNovaPeça('a', 8, new Torre(tab, Cor.Preta));
             colocarNovaPeça('b', 8, new Cavalo(tab, Cor.Preta));
@@ -311,14 +352,14 @@ namespace xadrez
             colocarNovaPeça('f', 8, new Bispo(tab, Cor.Preta));
             colocarNovaPeça('g', 8, new Cavalo(tab, Cor.Preta));
             colocarNovaPeça('h', 8, new Torre(tab, Cor.Preta));
-            colocarNovaPeça('a', 7, new Peao(tab, Cor.Preta));
-            colocarNovaPeça('b', 7, new Peao(tab, Cor.Preta));
-            colocarNovaPeça('c', 7, new Peao(tab, Cor.Preta));
-            colocarNovaPeça('d', 7, new Peao(tab, Cor.Preta));
-            colocarNovaPeça('e', 7, new Peao(tab, Cor.Preta));
-            colocarNovaPeça('f', 7, new Peao(tab, Cor.Preta));
-            colocarNovaPeça('g', 7, new Peao(tab, Cor.Preta));
-            colocarNovaPeça('h', 7, new Peao(tab, Cor.Preta));
+            colocarNovaPeça('a', 7, new Peao(tab, Cor.Preta, this));
+            colocarNovaPeça('b', 7, new Peao(tab, Cor.Preta, this));
+            colocarNovaPeça('c', 7, new Peao(tab, Cor.Preta, this));
+            colocarNovaPeça('d', 7, new Peao(tab, Cor.Preta, this));
+            colocarNovaPeça('e', 7, new Peao(tab, Cor.Preta, this));
+            colocarNovaPeça('f', 7, new Peao(tab, Cor.Preta, this));
+            colocarNovaPeça('g', 7, new Peao(tab, Cor.Preta, this));
+            colocarNovaPeça('h', 7, new Peao(tab, Cor.Preta, this));
 
         }
     }
