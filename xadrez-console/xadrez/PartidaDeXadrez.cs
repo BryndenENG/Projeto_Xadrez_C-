@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using tabuleiro;
 
 namespace xadrez
@@ -92,6 +93,25 @@ namespace xadrez
                 desfazMovimento(origem,destino,pecaCapturada);
                 throw new TabuleiroException("Você não pode se colocar em Xeque!");
             }
+            Peca p = tab.peca(destino);//armazena peça que foi movida
+
+            //#JOGADA ESPECIAL PROMOCAO
+            //verifica se a peça que efetuou a jogada é um peão
+            if (p is Peao)
+            {
+                //verifica se o peão alcançou a linha máxima de sua cor 
+                if((p.cor == Cor.Branca && destino.linha == 0)||(p.cor == Cor.Preta && destino.linha == 7))
+                {
+                    //remove a peça do tabuleiro 
+                    p = tab.retirarPeca(destino);
+                    pecas.Remove(p);
+                    //como forma de simplificar será colocado uma dama dentro do tabuleiro não haverá a escolha 
+                    Peca dama = new Dama(tab, p.cor);
+                    tab.colocarPeca(dama, destino);
+                    pecas.Add(dama);
+                }
+            }
+
             if (estaEmXeque(adversaria(jogadorAtual)))
             {
                 xeque = true;
@@ -112,12 +132,12 @@ namespace xadrez
                 mudaJogador();
             }
             //#JOGADA ESPECIAL EN PASSANT
-            Peca P = tab.peca(destino);//armazena peça que foi movida 
+             
             //testa se a peça é um peão e se a mesma efetuou o movimento especial inicial de mover duas posições tanto para preta
             //como para branca
-            if (P is Peao && (destino.linha == origem.linha - 2 || destino.linha == origem.linha +2))
+            if (p is Peao && (destino.linha == origem.linha - 2 || destino.linha == origem.linha +2))
             {
-                vulneravelEnPassant = P;
+                vulneravelEnPassant = p;
             }
             else
             {
